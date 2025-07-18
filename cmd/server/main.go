@@ -82,6 +82,9 @@ func setupRoutes(
 
 	// Components routes
 	r.GET("/components", componentsHandler.ComponentsPage)
+	r.GET("/components/colors", componentsHandler.GetColorPalette)
+	r.GET("/components/list", componentsHandler.GetComponents)
+	r.GET("/components/tokens", componentsHandler.GetDesignTokens)
 }
 
 func setupCORS() gin.HandlerFunc {

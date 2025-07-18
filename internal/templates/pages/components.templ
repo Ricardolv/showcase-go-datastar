@@ -1,0 +1,588 @@
+package pages
+
+import "showcase-datastar-go/internal/templates/layout"
+import "showcase-datastar-go/internal/templates/components"
+
+templ Components() {
+	@layout.Main("Components Gallery", ComponentsContent())
+}
+
+templ ComponentsContent() {
+	<!-- Hero Section -->
+	<section class="bg-gradient-cear relative overflow-hidden">
+		<div class="absolute inset-0 bg-black/10"></div>
+		<div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+			<div class="text-center">
+				<h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+					CEAR Design System
+				</h1>
+				<p class="text-xl text-orange-100 mb-8 max-w-2xl mx-auto">
+					Paleta de cores vibrante, componentes reutilizáveis e sistema 
+					visual coerente para experiências digitais memoráveis.
+				</p>
+				<div class="flex justify-center space-x-4">
+					@components.Badge("8 Cores Principais", components.BadgeSuccess, components.BadgeSizeMedium)
+					@components.Badge("16+ Componentes", components.BadgePrimary, components.BadgeSizeMedium)
+					@components.Badge("Tailwind Ready", components.BadgeSecondary, components.BadgeSizeMedium)
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Color Palette Section -->
+	<section class="py-16 bg-white">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+			<div class="text-center mb-12">
+				<h2 class="text-3xl font-bold text-secondary-900 mb-4">
+					Paleta CEAR
+				</h2>
+				<p class="text-xl text-secondary-600">
+					Cores vibrantes inspiradas na energia, criatividade e inovação
+				</p>
+			</div>
+
+			<!-- Primary Colors Grid -->
+			<div class="mb-12">
+				<h3 class="text-2xl font-semibold text-secondary-900 mb-6">Cores Principais</h3>
+				<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-6">
+					
+					<!-- Primary -->
+					<div class="text-center">
+						<div class="w-full h-24 bg-primary-500 rounded-lg shadow-lg mb-3 relative group hover:scale-105 transition-transform">
+							<div class="absolute inset-0 bg-black/0 hover:bg-black/10 rounded-lg transition-colors"></div>
+						</div>
+						<h4 class="font-semibold text-secondary-900">Primary</h4>
+						<p class="text-sm text-secondary-600">#F97316</p>
+						<p class="text-xs text-secondary-500">Energia</p>
+					</div>
+
+					<!-- Secondary -->
+					<div class="text-center">
+						<div class="w-full h-24 bg-secondary-500 rounded-lg shadow-lg mb-3 relative group hover:scale-105 transition-transform">
+							<div class="absolute inset-0 bg-black/0 hover:bg-black/10 rounded-lg transition-colors"></div>
+						</div>
+						<h4 class="font-semibold text-secondary-900">Secondary</h4>
+						<p class="text-sm text-secondary-600">#6B7280</p>
+						<p class="text-xs text-secondary-500">Equilíbrio</p>
+					</div>
+
+					<!-- Success -->
+					<div class="text-center">
+						<div class="w-full h-24 bg-green-500 rounded-lg shadow-lg mb-3 relative group hover:scale-105 transition-transform">
+							<div class="absolute inset-0 bg-black/0 hover:bg-black/10 rounded-lg transition-colors"></div>
+						</div>
+						<h4 class="font-semibold text-secondary-900">Success</h4>
+						<p class="text-sm text-secondary-600">#10B981</p>
+						<p class="text-xs text-secondary-500">Sucesso</p>
+					</div>
+
+					<!-- Warning -->
+					<div class="text-center">
+						<div class="w-full h-24 bg-yellow-500 rounded-lg shadow-lg mb-3 relative group hover:scale-105 transition-transform">
+							<div class="absolute inset-0 bg-black/0 hover:bg-black/10 rounded-lg transition-colors"></div>
+						</div>
+						<h4 class="font-semibold text-secondary-900">Warning</h4>
+						<p class="text-sm text-secondary-600">#F59E0B</p>
+						<p class="text-xs text-secondary-500">Atenção</p>
+					</div>
+
+					<!-- Error -->
+					<div class="text-center">
+						<div class="w-full h-24 bg-red-500 rounded-lg shadow-lg mb-3 relative group hover:scale-105 transition-transform">
+							<div class="absolute inset-0 bg-black/0 hover:bg-black/10 rounded-lg transition-colors"></div>
+						</div>
+						<h4 class="font-semibold text-secondary-900">Error</h4>
+						<p class="text-sm text-secondary-600">#EF4444</p>
+						<p class="text-xs text-secondary-500">Erro</p>
+					</div>
+
+					<!-- Info -->
+					<div class="text-center">
+						<div class="w-full h-24 bg-blue-500 rounded-lg shadow-lg mb-3 relative group hover:scale-105 transition-transform">
+							<div class="absolute inset-0 bg-black/0 hover:bg-black/10 rounded-lg transition-colors"></div>
+						</div>
+						<h4 class="font-semibold text-secondary-900">Info</h4>
+						<p class="text-sm text-secondary-600">#3B82F6</p>
+						<p class="text-xs text-secondary-500">Informação</p>
+					</div>
+
+					<!-- Purple -->
+					<div class="text-center">
+						<div class="w-full h-24 bg-purple-500 rounded-lg shadow-lg mb-3 relative group hover:scale-105 transition-transform">
+							<div class="absolute inset-0 bg-black/0 hover:bg-black/10 rounded-lg transition-colors"></div>
+						</div>
+						<h4 class="font-semibold text-secondary-900">Purple</h4>
+						<p class="text-sm text-secondary-600">#8B5CF6</p>
+						<p class="text-xs text-secondary-500">Criatividade</p>
+					</div>
+
+					<!-- Pink -->
+					<div class="text-center">
+						<div class="w-full h-24 bg-pink-500 rounded-lg shadow-lg mb-3 relative group hover:scale-105 transition-transform">
+							<div class="absolute inset-0 bg-black/0 hover:bg-black/10 rounded-lg transition-colors"></div>
+						</div>
+						<h4 class="font-semibold text-secondary-900">Pink</h4>
+						<p class="text-sm text-secondary-600">#EC4899</p>
+						<p class="text-xs text-secondary-500">Inovação</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- Gradients Section -->
+			<div class="mb-12">
+				<h3 class="text-2xl font-semibold text-secondary-900 mb-6">Gradientes</h3>
+				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+					
+					<div class="text-center">
+						<div class="w-full h-32 bg-gradient-cear rounded-lg shadow-orange mb-3 hover:scale-105 transition-transform"></div>
+						<h4 class="font-semibold text-secondary-900">Gradient CEAR</h4>
+						<p class="text-sm text-secondary-600">Orange → Red → Pink</p>
+					</div>
+
+					<div class="text-center">
+						<div class="w-full h-32 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg shadow-lg mb-3 hover:scale-105 transition-transform"></div>
+						<h4 class="font-semibold text-secondary-900">Tech Gradient</h4>
+						<p class="text-sm text-secondary-600">Blue → Purple</p>
+					</div>
+
+					<div class="text-center">
+						<div class="w-full h-32 bg-gradient-to-r from-green-500 to-blue-500 rounded-lg shadow-lg mb-3 hover:scale-105 transition-transform"></div>
+						<h4 class="font-semibold text-secondary-900">Success Gradient</h4>
+						<p class="text-sm text-secondary-600">Green → Blue</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- Shadows Section -->
+			<div class="mb-12">
+				<h3 class="text-2xl font-semibold text-secondary-900 mb-6">Shadows</h3>
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+					
+					<div class="text-center">
+						<div class="w-full h-24 bg-white rounded-lg shadow-orange mb-3"></div>
+						<h4 class="font-semibold text-secondary-900">Shadow Orange</h4>
+						<p class="text-sm text-secondary-600">shadow-orange</p>
+					</div>
+
+					<div class="text-center">
+						<div class="w-full h-24 bg-white rounded-lg shadow-orange-lg mb-3"></div>
+						<h4 class="font-semibold text-secondary-900">Shadow Orange Large</h4>
+						<p class="text-sm text-secondary-600">shadow-orange-lg</p>
+					</div>
+
+					<div class="text-center">
+						<div class="w-full h-24 bg-white rounded-lg shadow-lg mb-3"></div>
+						<h4 class="font-semibold text-secondary-900">Shadow Default</h4>
+						<p class="text-sm text-secondary-600">shadow-lg</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Components Section -->
+	<section class="py-16 bg-secondary-50">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+			<div class="text-center mb-12">
+				<h2 class="text-3xl font-bold text-secondary-900 mb-4">
+					Componentes
+				</h2>
+				<p class="text-xl text-secondary-600">
+					Biblioteca completa de componentes reutilizáveis
+				</p>
+			</div>
+
+			<!-- Buttons Section -->
+			<div class="mb-16">
+				<h3 class="text-2xl font-semibold text-secondary-900 mb-8">Buttons</h3>
+				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+					
+					<div class="card-cear">
+						<h4 class="text-lg font-semibold text-secondary-900 mb-4">Primary Buttons</h4>
+						<div class="space-y-4">
+							@components.Button("Primary Button", components.ButtonPrimary, components.ButtonSizeMedium, templ.Attributes{})
+							@components.Button("Large Primary", components.ButtonPrimary, components.ButtonSizeLarge, templ.Attributes{})
+							@components.Button("Small Primary", components.ButtonPrimary, components.ButtonSizeSmall, templ.Attributes{})
+						</div>
+					</div>
+
+					<div class="card-cear">
+						<h4 class="text-lg font-semibold text-secondary-900 mb-4">Secondary Buttons</h4>
+						<div class="space-y-4">
+							@components.Button("Secondary Button", components.ButtonSecondary, components.ButtonSizeMedium, templ.Attributes{})
+							@components.Button("Large Secondary", components.ButtonSecondary, components.ButtonSizeLarge, templ.Attributes{})
+							@components.Button("Small Secondary", components.ButtonSecondary, components.ButtonSizeSmall, templ.Attributes{})
+						</div>
+					</div>
+
+					<div class="card-cear">
+						<h4 class="text-lg font-semibold text-secondary-900 mb-4">Outline Buttons</h4>
+						<div class="space-y-4">
+							@components.Button("Outline Button", components.ButtonOutline, components.ButtonSizeMedium, templ.Attributes{})
+							@components.Button("Large Outline", components.ButtonOutline, components.ButtonSizeLarge, templ.Attributes{})
+							@components.Button("Small Outline", components.ButtonOutline, components.ButtonSizeSmall, templ.Attributes{})
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Badges Section -->
+			<div class="mb-16">
+				<h3 class="text-2xl font-semibold text-secondary-900 mb-8">Badges</h3>
+				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+					
+					<div class="card-cear">
+						<h4 class="text-lg font-semibold text-secondary-900 mb-4">Colors</h4>
+						<div class="flex flex-wrap gap-2">
+							@components.Badge("Primary", components.BadgePrimary, components.BadgeSizeMedium)
+							@components.Badge("Secondary", components.BadgeSecondary, components.BadgeSizeMedium)
+							@components.Badge("Success", components.BadgeSuccess, components.BadgeSizeMedium)
+							@components.Badge("Warning", components.BadgeWarning, components.BadgeSizeMedium)
+							@components.Badge("Error", components.BadgeDanger, components.BadgeSizeMedium)
+							@components.Badge("Info", components.BadgeInfo, components.BadgeSizeMedium)
+						</div>
+					</div>
+
+					<div class="card-cear">
+						<h4 class="text-lg font-semibold text-secondary-900 mb-4">Sizes</h4>
+						<div class="flex flex-wrap items-center gap-2">
+							@components.Badge("Small", components.BadgePrimary, components.BadgeSizeSmall)
+							@components.Badge("Medium", components.BadgePrimary, components.BadgeSizeMedium)
+							@components.Badge("Large", components.BadgePrimary, components.BadgeSizeLarge)
+						</div>
+					</div>
+
+					<div class="card-cear">
+						<h4 class="text-lg font-semibold text-secondary-900 mb-4">Status</h4>
+						<div class="flex flex-wrap gap-2">
+							@components.Badge("Active", components.BadgeSuccess, components.BadgeSizeMedium)
+							@components.Badge("Pending", components.BadgeWarning, components.BadgeSizeMedium)
+							@components.Badge("Inactive", components.BadgeDanger, components.BadgeSizeMedium)
+							@components.Badge("Draft", components.BadgeSecondary, components.BadgeSizeMedium)
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Cards Section -->
+			<div class="mb-16">
+				<h3 class="text-2xl font-semibold text-secondary-900 mb-8">Cards</h3>
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+					
+					<div class="card-cear">
+						<div class="p-6">
+							<h4 class="text-lg font-semibold text-secondary-900 mb-2">Basic Card</h4>
+							<p class="text-secondary-700">Esta é uma card básica com conteúdo simples e design limpo.</p>
+						</div>
+					</div>
+
+					<div class="bg-blue-50 border border-blue-200 rounded-lg hover:shadow-lg transition-all duration-300">
+						<div class="p-6">
+							<h4 class="text-lg font-semibold text-blue-900 mb-2">Info Card</h4>
+							<p class="text-blue-700">Card informativa com destaque visual para informações importantes.</p>
+						</div>
+					</div>
+
+					<div class="bg-yellow-50 border border-yellow-200 rounded-lg hover:shadow-lg transition-all duration-300">
+						<div class="p-6">
+							<h4 class="text-lg font-semibold text-yellow-900 mb-2">Warning Card</h4>
+							<p class="text-yellow-700">Card de aviso para chamar atenção para informações críticas.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Feature Cards Section -->
+			<div class="mb-16">
+				<h3 class="text-2xl font-semibold text-secondary-900 mb-8">Feature Cards</h3>
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+					
+					@components.FeatureCard("Performance", "Otimização extrema para carregamento rápido e experiência fluida.", "trending-up", components.CardPrimary, "")
+					@components.FeatureCard("Type Safety", "Templates type-safe com Templ para desenvolvimento confiável.", "check", components.CardSuccess, "")
+					@components.FeatureCard("Reactive UI", "Interface reativa com Datastar para interações dinâmicas.", "heart", components.CardSecondary, "")
+				</div>
+			</div>
+
+			<!-- Icons Section -->
+			<div class="mb-16">
+				<h3 class="text-2xl font-semibold text-secondary-900 mb-8">Icons</h3>
+				<div class="card-cear">
+					<div class="grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-6">
+						
+						<div class="text-center">
+							@components.Icon("home", "w-8 h-8 text-primary-500")
+							<p class="text-xs text-secondary-600 mt-1">home</p>
+						</div>
+
+						<div class="text-center">
+							@components.Icon("search", "w-8 h-8 text-primary-500")
+							<p class="text-xs text-secondary-600 mt-1">search</p>
+						</div>
+
+						<div class="text-center">
+							@components.Icon("trending-up", "w-8 h-8 text-primary-500")
+							<p class="text-xs text-secondary-600 mt-1">trending-up</p>
+						</div>
+
+						<div class="text-center">
+							@components.Icon("check", "w-8 h-8 text-green-500")
+							<p class="text-xs text-secondary-600 mt-1">check</p>
+						</div>
+
+						<div class="text-center">
+							@components.Icon("heart", "w-8 h-8 text-pink-500")
+							<p class="text-xs text-secondary-600 mt-1">heart</p>
+						</div>
+
+						<div class="text-center">
+							@components.Icon("menu", "w-8 h-8 text-secondary-500")
+							<p class="text-xs text-secondary-600 mt-1">menu</p>
+						</div>
+
+						<div class="text-center">
+							@components.Icon("x", "w-8 h-8 text-red-500")
+							<p class="text-xs text-secondary-600 mt-1">x</p>
+						</div>
+
+						<div class="text-center">
+							@components.Icon("refresh", "w-8 h-8 text-blue-500")
+							<p class="text-xs text-secondary-600 mt-1">refresh</p>
+						</div>
+
+						<div class="text-center">
+							@components.Icon("alert-circle", "w-8 h-8 text-yellow-500")
+							<p class="text-xs text-secondary-600 mt-1">alert-circle</p>
+						</div>
+
+						<div class="text-center">
+							@components.Icon("external-link", "w-8 h-8 text-purple-500")
+							<p class="text-xs text-secondary-600 mt-1">external-link</p>
+						</div>
+
+						<div class="text-center">
+							@components.Icon("filter", "w-8 h-8 text-secondary-500")
+							<p class="text-xs text-secondary-600 mt-1">filter</p>
+						</div>
+
+						<div class="text-center">
+							@components.Icon("star", "w-8 h-8 text-yellow-500")
+							<p class="text-xs text-secondary-600 mt-1">star</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Typography Section -->
+			<div class="mb-16">
+				<h3 class="text-2xl font-semibold text-secondary-900 mb-8">Typography</h3>
+				<div class="card-cear">
+					<div class="space-y-6">
+						<div>
+							<h1 class="text-5xl font-bold text-secondary-900 mb-2">Heading 1</h1>
+							<p class="text-sm text-secondary-600">text-5xl font-bold</p>
+						</div>
+						<div>
+							<h2 class="text-4xl font-bold text-secondary-900 mb-2">Heading 2</h2>
+							<p class="text-sm text-secondary-600">text-4xl font-bold</p>
+						</div>
+						<div>
+							<h3 class="text-3xl font-semibold text-secondary-900 mb-2">Heading 3</h3>
+							<p class="text-sm text-secondary-600">text-3xl font-semibold</p>
+						</div>
+						<div>
+							<h4 class="text-2xl font-semibold text-secondary-900 mb-2">Heading 4</h4>
+							<p class="text-sm text-secondary-600">text-2xl font-semibold</p>
+						</div>
+						<div>
+							<p class="text-lg text-secondary-700 mb-2">Large Body Text - Para destaque em parágrafos importantes</p>
+							<p class="text-sm text-secondary-600">text-lg text-secondary-700</p>
+						</div>
+						<div>
+							<p class="text-base text-secondary-700 mb-2">Regular Body Text - Para conteúdo principal e leitura</p>
+							<p class="text-sm text-secondary-600">text-base text-secondary-700</p>
+						</div>
+						<div>
+							<p class="text-sm text-secondary-600 mb-2">Small Text - Para informações secundárias e captions</p>
+							<p class="text-sm text-secondary-600">text-sm text-secondary-600</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Form Elements -->
+			<div class="mb-16">
+				<h3 class="text-2xl font-semibold text-secondary-900 mb-8">Form Elements</h3>
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+					
+					<div class="card-cear">
+						<h4 class="text-lg font-semibold text-secondary-900 mb-4">Input Fields</h4>
+						<div class="space-y-4">
+							<div>
+								<label class="block text-sm font-medium text-secondary-700 mb-2">Text Input</label>
+								<input type="text" placeholder="Digite algo..." class="input-cear" />
+							</div>
+							<div>
+								<label class="block text-sm font-medium text-secondary-700 mb-2">Email Input</label>
+								<input type="email" placeholder="seu@email.com" class="input-cear" />
+							</div>
+							<div>
+								<label class="block text-sm font-medium text-secondary-700 mb-2">Select</label>
+								<select class="input-cear">
+									<option>Selecione uma opção</option>
+									<option>Opção 1</option>
+									<option>Opção 2</option>
+								</select>
+							</div>
+						</div>
+					</div>
+
+					<div class="card-cear">
+						<h4 class="text-lg font-semibold text-secondary-900 mb-4">Textarea</h4>
+						<div>
+							<label class="block text-sm font-medium text-secondary-700 mb-2">Message</label>
+							<textarea rows="4" placeholder="Digite sua mensagem..." class="input-cear"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Usage Guide -->
+	<section class="py-16 bg-white">
+		<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+			<div class="text-center mb-12">
+				<h2 class="text-3xl font-bold text-secondary-900 mb-4">
+					Como Usar
+				</h2>
+				<p class="text-xl text-secondary-600">
+					Guia rápido para implementar o design system CEAR
+				</p>
+			</div>
+
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+				
+				<!-- CSS Classes -->
+				<div class="card-cear">
+					<h3 class="text-xl font-semibold text-secondary-900 mb-4">
+						Classes CSS Disponíveis
+					</h3>
+					<div class="space-y-3 text-sm">
+						<div class="bg-secondary-50 p-3 rounded">
+							<code class="text-primary-600">.btn-cear</code> - Botão principal
+						</div>
+						<div class="bg-secondary-50 p-3 rounded">
+							<code class="text-primary-600">.btn-cear-outline</code> - Botão outline
+						</div>
+						<div class="bg-secondary-50 p-3 rounded">
+							<code class="text-primary-600">.card-cear</code> - Card com shadow
+						</div>
+						<div class="bg-secondary-50 p-3 rounded">
+							<code class="text-primary-600">.input-cear</code> - Input estilizado
+						</div>
+						<div class="bg-secondary-50 p-3 rounded">
+							<code class="text-primary-600">.badge-cear</code> - Badge padrão
+						</div>
+						<div class="bg-secondary-50 p-3 rounded">
+							<code class="text-primary-600">.bg-gradient-cear</code> - Gradiente CEAR
+						</div>
+					</div>
+				</div>
+
+				<!-- Templ Components -->
+				<div class="card-cear">
+					<h3 class="text-xl font-semibold text-secondary-900 mb-4">
+						Componentes Templ
+					</h3>
+					<div class="space-y-3 text-sm">
+						<div class="bg-secondary-50 p-3 rounded">
+							<code class="text-primary-600">components.Button() - Botão principal</code>
+						</div>
+						<div class="bg-secondary-50 p-3 rounded">
+							<code class="text-primary-600">components.Badge() - Badge com variantes</code>
+						</div>
+						<div class="bg-secondary-50 p-3 rounded">
+							<code class="text-primary-600">components.Card() - Card com título</code>
+						</div>
+						<div class="bg-secondary-50 p-3 rounded">
+							<code class="text-primary-600">components.FeatureCard() - Card com ícone</code>
+						</div>
+						<div class="bg-secondary-50 p-3 rounded">
+							<code class="text-primary-600">components.Icon() - Ícones SVG</code>
+						</div>
+						<div class="bg-secondary-50 p-3 rounded">
+							<code class="text-primary-600">layout.Main() - Layout principal</code>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Color Values -->
+			<div class="mt-12">
+				<div class="card-cear">
+					<h3 class="text-xl font-semibold text-secondary-900 mb-6">
+						Valores de Cores
+					</h3>
+					<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+						<div>
+							<h4 class="font-medium text-secondary-900 mb-2">Primary</h4>
+							<div class="space-y-1 text-xs">
+								<div class="flex justify-between">
+									<span>50</span><span class="text-secondary-600">#FFF7ED</span>
+								</div>
+								<div class="flex justify-between">
+									<span>500</span><span class="text-secondary-600">#F97316</span>
+								</div>
+								<div class="flex justify-between">
+									<span>900</span><span class="text-secondary-600">#9A3412</span>
+								</div>
+							</div>
+						</div>
+						<div>
+							<h4 class="font-medium text-secondary-900 mb-2">Secondary</h4>
+							<div class="space-y-1 text-xs">
+								<div class="flex justify-between">
+									<span>50</span><span class="text-secondary-600">#F9FAFB</span>
+								</div>
+								<div class="flex justify-between">
+									<span>500</span><span class="text-secondary-600">#6B7280</span>
+								</div>
+								<div class="flex justify-between">
+									<span>900</span><span class="text-secondary-600">#111827</span>
+								</div>
+							</div>
+						</div>
+						<div>
+							<h4 class="font-medium text-secondary-900 mb-2">Success</h4>
+							<div class="space-y-1 text-xs">
+								<div class="flex justify-between">
+									<span>50</span><span class="text-secondary-600">#ECFDF5</span>
+								</div>
+								<div class="flex justify-between">
+									<span>500</span><span class="text-secondary-600">#10B981</span>
+								</div>
+								<div class="flex justify-between">
+									<span>900</span><span class="text-secondary-600">#064E3B</span>
+								</div>
+							</div>
+						</div>
+						<div>
+							<h4 class="font-medium text-secondary-900 mb-2">Error</h4>
+							<div class="space-y-1 text-xs">
+								<div class="flex justify-between">
+									<span>50</span><span class="text-secondary-600">#FEF2F2</span>
+								</div>
+								<div class="flex justify-between">
+									<span>500</span><span class="text-secondary-600">#EF4444</span>
+								</div>
+								<div class="flex justify-between">
+									<span>900</span><span class="text-secondary-600">#7F1D1D</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+} 

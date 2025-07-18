@@ -79,3 +79,4 @@ scripts/
 .roomodes
 package-lock.json
 package.json
+.cursor/
