@@ -473,15 +473,6 @@ go test -bench=. ./...
 
 Este projeto está sob a licença **MIT**. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
----
-
-## 👥 **Equipe CEAR**
-
-**Desenvolvido com ❤️ usando Go**
-
-- 🌐 **Website**: [cear.dev](https://cear.dev)
-- 📧 **Email**: contato@cear.dev
-- 🐙 **GitHub**: [@cear-dev](https://github.com/cear-dev)
 
 ---
 
