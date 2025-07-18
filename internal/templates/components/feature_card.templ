@@ -1,0 +1,70 @@
+package components
+
+templ FeatureCard(title string, description string, iconName string, variant CardVariant, content string) {
+	<div 
+		class={
+			"rounded-lg border transition-all duration-300 p-6",
+			
+			// Variantes
+			templ.KV("card-cear", variant == CardDefault),
+			templ.KV("bg-primary-50 border-primary-200 hover:shadow-orange-lg", variant == CardPrimary),
+			templ.KV("bg-secondary-50 border-secondary-200 hover:shadow-lg", variant == CardSecondary),
+			templ.KV("bg-green-50 border-green-200 hover:shadow-green-md", variant == CardSuccess),
+			templ.KV("bg-yellow-50 border-yellow-200 hover:shadow-yellow-md", variant == CardWarning),
+			templ.KV("bg-red-50 border-red-200 hover:shadow-red-md", variant == CardDanger),
+			templ.KV("bg-blue-50 border-blue-200 hover:shadow-blue-md", variant == CardInfo),
+		}>
+		
+		<div class="flex items-start space-x-4">
+			if iconName != "" {
+				<div class={
+					"w-12 h-12 rounded-lg flex items-center justify-center",
+					templ.KV("bg-primary-100", variant == CardDefault || variant == CardPrimary),
+					templ.KV("bg-secondary-100", variant == CardSecondary),
+					templ.KV("bg-green-100", variant == CardSuccess),
+					templ.KV("bg-yellow-100", variant == CardWarning),
+					templ.KV("bg-red-100", variant == CardDanger),
+					templ.KV("bg-blue-100", variant == CardInfo),
+				}>
+					if variant == CardDefault || variant == CardPrimary {
+						@Icon(iconName, "w-6 h-6 text-primary-600")
+					} else if variant == CardSecondary {
+						@Icon(iconName, "w-6 h-6 text-secondary-600")
+					} else if variant == CardSuccess {
+						@Icon(iconName, "w-6 h-6 text-green-600")
+					} else if variant == CardWarning {
+						@Icon(iconName, "w-6 h-6 text-yellow-600")
+					} else if variant == CardDanger {
+						@Icon(iconName, "w-6 h-6 text-red-600")
+					} else if variant == CardInfo {
+						@Icon(iconName, "w-6 h-6 text-blue-600")
+					}
+				</div>
+			}
+			
+			<div class="flex-1">
+				<h3 class={
+					"text-xl font-semibold mb-3",
+					templ.KV("text-secondary-900", variant == CardDefault || variant == CardSecondary),
+					templ.KV("text-primary-900", variant == CardPrimary),
+					templ.KV("text-green-900", variant == CardSuccess),
+					templ.KV("text-yellow-900", variant == CardWarning),
+					templ.KV("text-red-900", variant == CardDanger),
+					templ.KV("text-blue-900", variant == CardInfo),
+				}>
+					{ title }
+				</h3>
+				
+				<p class="text-secondary-700 mb-4">
+					{ description }
+				</p>
+				
+				if content != "" {
+					<div>
+						{ content }
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+} 

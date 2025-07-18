@@ -1,0 +1,76 @@
+package components
+
+templ Footer() {
+	<footer class="footer-cear mt-auto">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+			<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+				
+				<!-- Logo e Descrição -->
+				<div class="col-span-1 md:col-span-2">
+					<div class="flex items-center space-x-3 mb-4">
+						<div class="w-8 h-8 bg-gradient-cear rounded-lg flex items-center justify-center">
+							<span class="text-white font-bold">C</span>
+						</div>
+						<span class="text-xl font-bold text-secondary-100">CEAR Showcase Go</span>
+					</div>
+					<p class="text-secondary-300 text-sm max-w-md mb-4">
+						Demonstração das capacidades do Go + Datastar + Tailwind CSS. 
+						Performance excepcional, simplicidade de desenvolvimento e type safety completa.
+					</p>
+					<div class="flex space-x-4">
+						<a href="https://github.com" 
+						   target="_blank" 
+						   class="text-secondary-400 hover:text-primary-400 transition-colors">
+							@Icon("github", "w-5 h-5")
+						</a>
+						<a href="https://data-star.dev" 
+						   target="_blank" 
+						   class="text-secondary-400 hover:text-primary-400 transition-colors">
+							@Icon("external-link", "w-5 h-5")
+						</a>
+					</div>
+				</div>
+				
+				<!-- Tech Stack -->
+				<div class="col-span-1">
+					<h3 class="text-secondary-100 font-semibold mb-4">Tech Stack</h3>
+					<ul class="space-y-2 text-sm">
+						<li><a href="https://golang.org" target="_blank" class="text-secondary-300 hover:text-primary-400 transition-colors">Go 1.21+</a></li>
+						<li><a href="https://gin-gonic.com" target="_blank" class="text-secondary-300 hover:text-primary-400 transition-colors">Gin Framework</a></li>
+						<li><a href="https://templ.guide" target="_blank" class="text-secondary-300 hover:text-primary-400 transition-colors">Templ Templates</a></li>
+						<li><a href="https://data-star.dev" target="_blank" class="text-secondary-300 hover:text-primary-400 transition-colors">Datastar</a></li>
+						<li><a href="https://tailwindcss.com" target="_blank" class="text-secondary-300 hover:text-primary-400 transition-colors">Tailwind CSS</a></li>
+					</ul>
+				</div>
+				
+				<!-- Exemplos -->
+				<div class="col-span-1">
+					<h3 class="text-secondary-100 font-semibold mb-4">Exemplos</h3>
+					<ul class="space-y-2 text-sm">
+						<li><a href="/search" class="text-secondary-300 hover:text-primary-400 transition-colors">Active Search</a></li>
+						<li><a href="/dashboard" class="text-secondary-300 hover:text-primary-400 transition-colors">Dashboard SSE</a></li>
+						<li><a href="/forms" class="text-secondary-300 hover:text-primary-400 transition-colors">Forms Reactivos</a></li>
+						<li><a href="/components" class="text-secondary-300 hover:text-primary-400 transition-colors">Paleta CEAR</a></li>
+					</ul>
+				</div>
+				
+			</div>
+			
+			<!-- Divider -->
+			<div class="border-t border-secondary-700 mt-8 pt-8">
+				<div class="flex flex-col sm:flex-row justify-between items-center">
+					<div class="text-secondary-400 text-sm">
+						<span>© 2025 CEAR. Feito com</span>
+						<span class="text-primary-400 mx-1">@Icon("heart", "w-4 h-4 inline")</span>
+						<span>usando Go.</span>
+					</div>
+					<div class="text-secondary-400 text-sm mt-2 sm:mt-0">
+						<span class="mr-4">Performance: ⚡ Startup &lt; 1s</span>
+						<span>Memory: 📦 &lt; 20MB</span>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</footer>
+} 

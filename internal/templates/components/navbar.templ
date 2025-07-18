@@ -1,0 +1,102 @@
+package components
+
+templ Navbar() {
+	<nav class="navbar-cear sticky top-0 z-40">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+			<div class="flex justify-between items-center h-16">
+				
+				<!-- Logo e Nome -->
+				<div class="flex items-center">
+					<a href="/" class="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+						<div class="w-10 h-10 bg-gradient-cear rounded-lg flex items-center justify-center">
+							<span class="text-white font-bold text-lg">C</span>
+						</div>
+						<div class="hidden sm:block">
+							<span class="text-xl font-bold text-secondary-900">CEAR</span>
+							<span class="text-sm text-secondary-600 ml-2">Showcase Go</span>
+						</div>
+					</a>
+				</div>
+				
+				<!-- Navigation Links Desktop -->
+				<div class="hidden md:flex items-center space-x-8">
+					<a href="/" 
+					   class="text-secondary-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+						Home
+					</a>
+					<a href="/search" 
+					   class="text-secondary-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+						Active Search
+					</a>
+					<a href="/dashboard" 
+					   class="text-secondary-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+						Dashboard
+					</a>
+					<a href="/forms" 
+					   class="text-secondary-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+						Forms
+					</a>
+					<a href="/components" 
+					   class="text-secondary-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+						Components
+					</a>
+				</div>
+				
+				<!-- CTA Button -->
+				<div class="hidden md:flex items-center space-x-4">
+					<a href="https://github.com" 
+					   target="_blank"
+					   class="btn-cear-outline text-sm">
+						View Code
+					</a>
+				</div>
+				
+				<!-- Mobile menu button -->
+				<div class="md:hidden">
+					<button type="button" 
+					        class="text-secondary-500 hover:text-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 p-2 rounded-md"
+					        data-on-click="$toggleMobileMenu = !$toggleMobileMenu">
+						@Icon("menu", "w-6 h-6")
+					</button>
+				</div>
+				
+			</div>
+			
+			<!-- Mobile Navigation -->
+			<div class="md:hidden" 
+			     data-show="$toggleMobileMenu"
+			     data-transition>
+				<div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-secondary-200 bg-white">
+					<a href="/" 
+					   class="text-secondary-700 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium">
+						Home
+					</a>
+					<a href="/search" 
+					   class="text-secondary-700 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium">
+						Active Search
+					</a>
+					<a href="/dashboard" 
+					   class="text-secondary-700 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium">
+						Dashboard
+					</a>
+					<a href="/forms" 
+					   class="text-secondary-700 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium">
+						Forms
+					</a>
+					<a href="/components" 
+					   class="text-secondary-700 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium">
+						Components
+					</a>
+					<div class="pt-4">
+						<a href="https://github.com" 
+						   target="_blank"
+						   class="btn-cear w-full text-center">
+							View Code
+						</a>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</nav>
+} 

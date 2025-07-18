@@ -1,0 +1,105 @@
+package components
+
+type ButtonVariant string
+
+const (
+	ButtonPrimary   ButtonVariant = "primary"
+	ButtonSecondary ButtonVariant = "secondary"
+	ButtonOutline   ButtonVariant = "outline"
+	ButtonDanger    ButtonVariant = "danger"
+	ButtonSuccess   ButtonVariant = "success"
+)
+
+type ButtonSize string
+
+const (
+	ButtonSizeSmall  ButtonSize = "sm"
+	ButtonSizeMedium ButtonSize = "md"
+	ButtonSizeLarge  ButtonSize = "lg"
+)
+
+templ Button(text string, variant ButtonVariant, size ButtonSize, attrs templ.Attributes) {
+	<button 
+		class={
+			"inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed",
+			
+			// Variantes
+			templ.KV("btn-cear", variant == ButtonPrimary),
+			templ.KV("btn-cear-outline", variant == ButtonOutline),
+			templ.KV("bg-secondary-600 hover:bg-secondary-700 text-white focus:ring-secondary-500", variant == ButtonSecondary),
+			templ.KV("bg-red-600 hover:bg-red-700 text-white focus:ring-red-500", variant == ButtonDanger),
+			templ.KV("bg-green-600 hover:bg-green-700 text-white focus:ring-green-500", variant == ButtonSuccess),
+			
+			// Tamanhos
+			templ.KV("px-3 py-1.5 text-sm rounded-md", size == ButtonSizeSmall),
+			templ.KV("px-6 py-3 text-base rounded-lg", size == ButtonSizeMedium),
+			templ.KV("px-8 py-4 text-lg rounded-xl", size == ButtonSizeLarge),
+		}
+		{ attrs... }>
+		{ text }
+	</button>
+}
+
+templ ButtonWithIcon(text string, iconName string, variant ButtonVariant, size ButtonSize, attrs templ.Attributes) {
+	<button 
+		class={
+			"inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed",
+			
+			// Variantes
+			templ.KV("btn-cear", variant == ButtonPrimary),
+			templ.KV("btn-cear-outline", variant == ButtonOutline),
+			templ.KV("bg-secondary-600 hover:bg-secondary-700 text-white focus:ring-secondary-500", variant == ButtonSecondary),
+			templ.KV("bg-red-600 hover:bg-red-700 text-white focus:ring-red-500", variant == ButtonDanger),
+			templ.KV("bg-green-600 hover:bg-green-700 text-white focus:ring-green-500", variant == ButtonSuccess),
+			
+			// Tamanhos
+			templ.KV("px-3 py-1.5 text-sm rounded-md", size == ButtonSizeSmall),
+			templ.KV("px-6 py-3 text-base rounded-lg", size == ButtonSizeMedium),
+			templ.KV("px-8 py-4 text-lg rounded-xl", size == ButtonSizeLarge),
+		}
+		{ attrs... }>
+		
+		if iconName != "" {
+			<span class="mr-2">
+				if size == ButtonSizeSmall {
+					@Icon(iconName, "w-4 h-4")
+				} else if size == ButtonSizeLarge {
+					@Icon(iconName, "w-6 h-6")
+				} else {
+					@Icon(iconName, "w-5 h-5")
+				}
+			</span>
+		}
+		
+		{ text }
+	</button>
+}
+
+templ IconButton(iconName string, variant ButtonVariant, size ButtonSize, attrs templ.Attributes) {
+	<button 
+		class={
+			"inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed",
+			
+			// Variantes
+			templ.KV("btn-cear", variant == ButtonPrimary),
+			templ.KV("btn-cear-outline", variant == ButtonOutline),
+			templ.KV("bg-secondary-600 hover:bg-secondary-700 text-white focus:ring-secondary-500", variant == ButtonSecondary),
+			templ.KV("bg-red-600 hover:bg-red-700 text-white focus:ring-red-500", variant == ButtonDanger),
+			templ.KV("bg-green-600 hover:bg-green-700 text-white focus:ring-green-500", variant == ButtonSuccess),
+			
+			// Tamanhos - quadrados para icon button
+			templ.KV("p-1.5 rounded-md", size == ButtonSizeSmall),
+			templ.KV("p-3 rounded-lg", size == ButtonSizeMedium),
+			templ.KV("p-4 rounded-xl", size == ButtonSizeLarge),
+		}
+		{ attrs... }>
+		
+		if size == ButtonSizeSmall {
+			@Icon(iconName, "w-4 h-4")
+		} else if size == ButtonSizeLarge {
+			@Icon(iconName, "w-6 h-6")
+		} else {
+			@Icon(iconName, "w-5 h-5")
+		}
+	</button>
+} 

@@ -1,0 +1,147 @@
+package pages
+
+import "showcase-datastar-go/internal/templates/layout"
+import "showcase-datastar-go/internal/templates/components"
+
+templ HomeSimple() {
+	@layout.Main("Home", HomeSimpleContent())
+}
+
+templ HomeSimpleContent() {
+	<!-- Hero Section -->
+	<section class="bg-gradient-cear relative overflow-hidden">
+		<div class="absolute inset-0 bg-black/10"></div>
+		<div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+			<div class="text-center">
+				<h1 class="text-4xl md:text-6xl font-bold text-white mb-6 animate-fade-in">
+					CEAR Showcase Go
+				</h1>
+				<p class="text-xl md:text-2xl text-orange-100 mb-8 max-w-3xl mx-auto animate-slide-up">
+					Demonstração das capacidades do Go + Datastar + Tailwind CSS. 
+					Performance excepcional, desenvolvimento simples, type safety completa.
+				</p>
+				<div class="flex flex-col sm:flex-row gap-4 justify-center items-center animate-bounce-in">
+					@components.ButtonWithIcon("Explorar Exemplos", "search", components.ButtonPrimary, components.ButtonSizeLarge, templ.Attributes{"onclick": "window.location.href='/search'"})
+					@components.ButtonWithIcon("Ver Código", "github", components.ButtonOutline, components.ButtonSizeLarge, templ.Attributes{"onclick": "window.open('https://github.com', '_blank')"})
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Features Grid -->
+	<section class="py-24 bg-white">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+			<div class="text-center mb-16">
+				<h2 class="text-3xl md:text-4xl font-bold text-secondary-900 mb-4">
+					Por que Go + Datastar?
+				</h2>
+				<p class="text-xl text-secondary-600 max-w-3xl mx-auto">
+					Combinação perfeita para aplicações web modernas: performance nativa, 
+					simplicidade de desenvolvimento e experiência de usuário excepcional.
+				</p>
+			</div>
+
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+				
+				<!-- Performance Card -->
+				<div class="card-cear">
+					<div class="flex items-start space-x-4">
+						<div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
+							@components.Icon("trending-up", "w-6 h-6 text-primary-600")
+						</div>
+						<div class="flex-1">
+							<h3 class="text-xl font-semibold text-secondary-900 mb-3">
+								Performance Nativa
+							</h3>
+							<p class="text-secondary-700 mb-4">
+								Startup em menos de 1 segundo, uso de memória inferior a 20MB, 
+								throughput de milhares de requests por segundo.
+							</p>
+							<div class="space-y-2 text-sm text-secondary-600">
+								<div class="flex justify-between">
+									<span>Startup:</span>
+									<span class="font-mono text-green-600">&lt; 1s</span>
+								</div>
+								<div class="flex justify-between">
+									<span>Memory:</span>
+									<span class="font-mono text-green-600">&lt; 20MB</span>
+								</div>
+								<div class="flex justify-between">
+									<span>Binary Size:</span>
+									<span class="font-mono text-green-600">&lt; 15MB</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Type Safety Card -->
+				<div class="card-cear">
+					<div class="flex items-start space-x-4">
+						<div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+							@components.Icon("check", "w-6 h-6 text-green-600")
+						</div>
+						<div class="flex-1">
+							<h3 class="text-xl font-semibold text-secondary-900 mb-3">
+								Type Safety
+							</h3>
+							<p class="text-secondary-700 mb-4">
+								Templates Templ com type safety completa, validação em tempo de compilação, 
+								IntelliSense e refactoring automático.
+							</p>
+							<div class="bg-secondary-800 rounded-lg p-3 text-sm">
+								<code class="text-green-400">
+									<span class="text-blue-400">templ</span> 
+									<span class="text-yellow-400">Button</span>(<span class="text-red-400">text string</span>) &#123;
+								</code>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Developer Experience Card -->
+				<div class="card-cear">
+					<div class="flex items-start space-x-4">
+						<div class="w-12 h-12 bg-secondary-100 rounded-lg flex items-center justify-center">
+							@components.Icon("heart", "w-6 h-6 text-secondary-600")
+						</div>
+						<div class="flex-1">
+							<h3 class="text-xl font-semibold text-secondary-900 mb-3">
+								Developer Experience
+							</h3>
+							<p class="text-secondary-700 mb-4">
+								Hot reload com Air + Templ watch, build pipeline automatizado, 
+								debugging simplificado e deploy de binário único.
+							</p>
+							<ul class="text-sm text-secondary-600 space-y-1">
+								<li>• Hot reload instantâneo</li>
+								<li>• Build pipeline automatizado</li>
+								<li>• Deploy de binário único</li>
+								<li>• Debugging simplificado</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</section>
+
+	<!-- Stats Section -->
+	<section class="py-24 bg-secondary-50">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+			<div class="text-center mb-16">
+				<h2 class="text-3xl md:text-4xl font-bold text-secondary-900 mb-4">
+					Performance em Números
+				</h2>
+			</div>
+
+			<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+				@components.StatCard("Startup Time", "< 1s", "+90% vs Node.js", "trending-up", "up")
+				@components.StatCard("Memory Usage", "< 20MB", "+85% vs Express", "dollar", "up")
+				@components.StatCard("Bundle Size", "10.54 KiB", "Datastar Framework", "chart", "")
+				@components.StatCard("Build Time", "< 5s", "Compile + Assets", "trending-up", "up")
+			</div>
+		</div>
+	</section>
+} 

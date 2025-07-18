@@ -1,0 +1,245 @@
+package pages
+
+import "showcase-datastar-go/internal/templates/layout"
+import "showcase-datastar-go/internal/templates/components"
+
+templ Search() {
+	@layout.Main("Active Search", SearchContent())
+}
+
+templ SearchContent() {
+	<!-- Hero Section -->
+	<section class="bg-gradient-cear relative overflow-hidden">
+		<div class="absolute inset-0 bg-black/10"></div>
+		<div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+			<div class="text-center">
+				<h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+					Active Search
+				</h1>
+				<p class="text-xl text-orange-100 mb-8 max-w-2xl mx-auto">
+					Busca em tempo real com Datastar SSE. Digite e veja os resultados aparecerem instantaneamente 
+					com debounce, highlights e filtros dinâmicos.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<!-- Search Interface -->
+	<section class="py-12 bg-white" data-store="{query: '', loading: false, results: [], filters: {category: 'all', sort: 'relevance'}}">
+		<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+			
+			<!-- Search Bar -->
+			<div class="mb-8">
+				<div class="relative">
+					<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+						@components.Icon("search", "w-5 h-5 text-secondary-400")
+					</div>
+					<input
+						type="text"
+						placeholder="Digite para buscar... (ex: Go, JavaScript, Python)"
+						class="input-cear pl-10 pr-12 text-lg h-14"
+						data-model="query"
+						data-on-input="debounce($$get('/search/results?q=' + $query + '&category=' + $filters.category + '&sort=' + $filters.sort), 300)"
+						data-on-focus="$loading = false"
+					/>
+					
+					<!-- Loading Spinner -->
+					<div class="absolute inset-y-0 right-0 pr-3 flex items-center" data-show="$loading">
+						<div class="w-5 h-5 border-2 border-primary-500 border-t-transparent rounded-full animate-spin"></div>
+					</div>
+					
+					<!-- Clear Button -->
+					<div class="absolute inset-y-0 right-0 pr-3 flex items-center" data-show="$query && !$loading">
+						<button 
+							type="button"
+							class="text-secondary-400 hover:text-secondary-600 focus:outline-none"
+							data-on-click="$query = ''; $results = []">
+							@components.Icon("x", "w-5 h-5")
+						</button>
+					</div>
+				</div>
+				
+				<!-- Search Stats -->
+				<div class="mt-3 flex items-center justify-between text-sm text-secondary-600">
+					<div data-show="$results.length > 0">
+						<span data-text="$results.length + ' resultados encontrados'"></span>
+						<span data-show="$query" class="ml-2">
+							para "<span data-text="$query" class="font-medium text-primary-600"></span>"
+						</span>
+					</div>
+					<div data-show="$query && $results.length === 0 && !$loading" class="text-secondary-500">
+						Nenhum resultado encontrado
+					</div>
+				</div>
+			</div>
+
+			<!-- Filters -->
+			<div class="mb-6 flex flex-wrap gap-4 items-center" data-show="$query">
+				<div class="flex items-center space-x-2">
+					<label class="text-sm font-medium text-secondary-700">Categoria:</label>
+					<select 
+						class="rounded-md border-secondary-300 text-sm focus:ring-primary-500 focus:border-primary-500"
+						data-model="filters.category"
+						data-on-change="$$get('/search/results?q=' + $query + '&category=' + $filters.category + '&sort=' + $filters.sort)">
+						<option value="all">Todas</option>
+						<option value="languages">Linguagens</option>
+						<option value="frameworks">Frameworks</option>
+						<option value="tools">Ferramentas</option>
+						<option value="databases">Databases</option>
+					</select>
+				</div>
+				
+				<div class="flex items-center space-x-2">
+					<label class="text-sm font-medium text-secondary-700">Ordenar:</label>
+					<select 
+						class="rounded-md border-secondary-300 text-sm focus:ring-primary-500 focus:border-primary-500"
+						data-model="filters.sort"
+						data-on-change="$$get('/search/results?q=' + $query + '&category=' + $filters.category + '&sort=' + $filters.sort)">
+						<option value="relevance">Relevância</option>
+						<option value="name">Nome A-Z</option>
+						<option value="popularity">Popularidade</option>
+						<option value="recent">Mais Recentes</option>
+					</select>
+				</div>
+				
+				<div class="flex items-center space-x-2 ml-auto">
+					@components.Badge("Real-time", components.BadgeSuccess, components.BadgeSizeSmall)
+					@components.Badge("Datastar SSE", components.BadgePrimary, components.BadgeSizeSmall)
+				</div>
+			</div>
+
+			<!-- Results Container -->
+			<div id="search-results" class="space-y-4">
+				<!-- Results will be populated via SSE -->
+			</div>
+
+			<!-- Empty State -->
+			<div class="text-center py-12" data-show="!$query">
+				<div class="w-16 h-16 bg-secondary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+					@components.Icon("search", "w-8 h-8 text-secondary-400")
+				</div>
+				<h3 class="text-lg font-medium text-secondary-900 mb-2">
+					Comece a buscar
+				</h3>
+				<p class="text-secondary-600 max-w-md mx-auto mb-6">
+					Digite qualquer termo para ver a busca em tempo real funcionando. 
+					Experimente: "Go", "React", "Docker", "PostgreSQL"
+				</p>
+				
+				<!-- Quick Search Suggestions -->
+				<div class="flex flex-wrap gap-2 justify-center">
+					<button 
+						class="px-3 py-1 bg-secondary-100 hover:bg-primary-100 rounded-full text-sm text-secondary-700 hover:text-primary-700 transition-colors"
+						data-on-click="$query = 'Go'; $$get('/search/results?q=Go&category=all&sort=relevance')">
+						Go
+					</button>
+					<button 
+						class="px-3 py-1 bg-secondary-100 hover:bg-primary-100 rounded-full text-sm text-secondary-700 hover:text-primary-700 transition-colors"
+						data-on-click="$query = 'JavaScript'; $$get('/search/results?q=JavaScript&category=all&sort=relevance')">
+						JavaScript
+					</button>
+					<button 
+						class="px-3 py-1 bg-secondary-100 hover:bg-primary-100 rounded-full text-sm text-secondary-700 hover:text-primary-700 transition-colors"
+						data-on-click="$query = 'Docker'; $$get('/search/results?q=Docker&category=all&sort=relevance')">
+						Docker
+					</button>
+					<button 
+						class="px-3 py-1 bg-secondary-100 hover:bg-primary-100 rounded-full text-sm text-secondary-700 hover:text-primary-700 transition-colors"
+						data-on-click="$query = 'React'; $$get('/search/results?q=React&category=all&sort=relevance')">
+						React
+					</button>
+					<button 
+						class="px-3 py-1 bg-secondary-100 hover:bg-primary-100 rounded-full text-sm text-secondary-700 hover:text-primary-700 transition-colors"
+						data-on-click="$query = 'PostgreSQL'; $$get('/search/results?q=PostgreSQL&category=all&sort=relevance')">
+						PostgreSQL
+					</button>
+				</div>
+			</div>
+
+		</div>
+	</section>
+
+	<!-- Features Info -->
+	<section class="py-16 bg-secondary-50">
+		<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+			<div class="text-center mb-12">
+				<h2 class="text-3xl font-bold text-secondary-900 mb-4">
+					Como Funciona a Busca
+				</h2>
+				<p class="text-xl text-secondary-600">
+					Tecnologias e técnicas por trás da busca em tempo real
+				</p>
+			</div>
+
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+				<div class="card-cear">
+					<div class="flex items-start space-x-4">
+						<div class="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center">
+							@components.Icon("trending-up", "w-5 h-5 text-primary-600")
+						</div>
+						<div>
+							<h3 class="text-lg font-semibold text-secondary-900 mb-2">
+								Debounce Inteligente
+							</h3>
+							<p class="text-secondary-700 text-sm">
+								Aguarda 300ms após a última digitação antes de fazer a busca, 
+								reduzindo requests desnecessários e melhorando a performance.
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="card-cear">
+					<div class="flex items-start space-x-4">
+						<div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+							@components.Icon("trending-up", "w-5 h-5 text-green-600")
+						</div>
+						<div>
+							<h3 class="text-lg font-semibold text-secondary-900 mb-2">
+								Server-Sent Events
+							</h3>
+							<p class="text-secondary-700 text-sm">
+								Conexão persistente com o servidor usando SSE para atualizações 
+								em tempo real sem polling ou WebSockets complexos.
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="card-cear">
+					<div class="flex items-start space-x-4">
+						<div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+							@components.Icon("search", "w-5 h-5 text-blue-600")
+						</div>
+						<div>
+							<h3 class="text-lg font-semibold text-secondary-900 mb-2">
+								Busca Fuzzy
+							</h3>
+							<p class="text-secondary-700 text-sm">
+								Algoritmo de busca tolerante a erros de digitação, encontrando 
+								resultados mesmo com palavras parciais ou com typos.
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="card-cear">
+					<div class="flex items-start space-x-4">
+						<div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
+							@components.Icon("trending-up", "w-5 h-5 text-yellow-600")
+						</div>
+						<div>
+							<h3 class="text-lg font-semibold text-secondary-900 mb-2">
+								Highlights Dinâmicos
+							</h3>
+							<p class="text-secondary-700 text-sm">
+								Destaque automático dos termos pesquisados nos resultados, 
+								facilitando a identificação rápida de matches relevantes.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+} 

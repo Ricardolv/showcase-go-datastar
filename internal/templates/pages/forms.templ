@@ -1,0 +1,458 @@
+package pages
+
+import "showcase-datastar-go/internal/templates/layout"
+import "showcase-datastar-go/internal/templates/components"
+
+templ Forms() {
+	@layout.Main("Forms Reativos", FormsContent())
+}
+
+templ FormsContent() {
+	<!-- Hero Section -->
+	<section class="bg-gradient-cear relative overflow-hidden">
+		<div class="absolute inset-0 bg-black/10"></div>
+		<div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+			<div class="text-center">
+				<h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+					Forms Reativos
+				</h1>
+				<p class="text-xl text-orange-100 mb-8 max-w-2xl mx-auto">
+					Validação em tempo real, máscaras inteligentes e submissão AJAX. 
+					Experiência de usuário fluida sem recarregar a página.
+				</p>
+				<div class="flex justify-center space-x-4">
+					@components.Badge("Real-time Validation", components.BadgeSuccess, components.BadgeSizeMedium)
+					@components.Badge("AJAX Powered", components.BadgePrimary, components.BadgeSizeMedium)
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Forms Section -->
+	<section class="py-12 bg-white">
+		<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+			
+			<!-- Contact Form -->
+			<div class="mb-16">
+				<div class="text-center mb-8">
+					<h2 class="text-3xl font-bold text-secondary-900 mb-4">
+						Formulário de Contato
+					</h2>
+					<p class="text-xl text-secondary-600">
+						Validação completa com feedback visual instantâneo
+					</p>
+				</div>
+
+				<div class="card-cear max-w-2xl mx-auto" 
+				     data-store="{contactForm: {name: '', email: '', subject: '', message: ''}, contactErrors: {}, contactLoading: false, contactSuccess: false}">
+					
+					<form data-on-submit="$$post('/forms/contact-submit')"
+					      class="space-y-6">
+						
+						<!-- Name Field -->
+						<div>
+							<label for="contact-name" class="block text-sm font-medium text-secondary-700 mb-2">
+								Nome Completo *
+							</label>
+							<input
+								type="text"
+								id="contact-name"
+								name="name"
+								placeholder="Digite seu nome completo"
+								class="input-cear"
+								data-model="contactForm.name"
+								data-on-input="debounce($$post('/forms/validate-field', {field: 'name', value: $contactForm.name}), 500)"
+								required
+							/>
+							<div class="mt-1 text-sm text-red-600" data-show="$contactErrors.name" data-text="$contactErrors.name"></div>
+							<div class="mt-1 text-sm text-green-600" data-show="$contactForm.name && !$contactErrors.name && $contactForm.name.length >= 2">
+								✓ Nome válido
+							</div>
+						</div>
+
+						<!-- Email Field -->
+						<div>
+							<label for="contact-email" class="block text-sm font-medium text-secondary-700 mb-2">
+								Email *
+							</label>
+							<input
+								type="email"
+								id="contact-email"
+								name="email"
+								placeholder="seu.email@exemplo.com"
+								class="input-cear"
+								data-model="contactForm.email"
+								data-on-input="debounce($$post('/forms/validate-email', {email: $contactForm.email}), 500)"
+								required
+							/>
+							<div class="mt-1 text-sm text-red-600" data-show="$contactErrors.email" data-text="$contactErrors.email"></div>
+							<div class="mt-1 text-sm text-green-600" data-show="$contactForm.email && !$contactErrors.email && $contactForm.email.includes('@')">
+								✓ Email válido
+							</div>
+						</div>
+
+						<!-- Subject Field -->
+						<div>
+							<label for="contact-subject" class="block text-sm font-medium text-secondary-700 mb-2">
+								Assunto *
+							</label>
+							<select
+								id="contact-subject"
+								name="subject"
+								class="input-cear"
+								data-model="contactForm.subject"
+								required>
+								<option value="">Selecione um assunto</option>
+								<option value="duvida">Dúvida Técnica</option>
+								<option value="feedback">Feedback</option>
+								<option value="parceria">Proposta de Parceria</option>
+								<option value="bug">Relatar Bug</option>
+								<option value="outro">Outro</option>
+							</select>
+							<div class="mt-1 text-sm text-red-600" data-show="$contactErrors.subject" data-text="$contactErrors.subject"></div>
+						</div>
+
+						<!-- Message Field -->
+						<div>
+							<label for="contact-message" class="block text-sm font-medium text-secondary-700 mb-2">
+								Mensagem *
+								<span class="text-secondary-500 text-sm ml-2">
+									(<span data-text="$contactForm.message.length || 0"></span>/500 caracteres)
+								</span>
+							</label>
+							<textarea
+								id="contact-message"
+								name="message"
+								placeholder="Descreva sua mensagem detalhadamente..."
+								rows="4"
+								maxlength="500"
+								class="input-cear"
+								data-model="contactForm.message"
+								data-on-input="$$post('/forms/count-chars', {text: $contactForm.message, field: 'message'})"
+								required
+							></textarea>
+							<div class="mt-1 text-sm text-red-600" data-show="$contactErrors.message" data-text="$contactErrors.message"></div>
+							<div class="mt-1 text-sm text-yellow-600" data-show="$contactForm.message.length > 400">
+								⚠️ Próximo do limite de caracteres
+							</div>
+						</div>
+
+						<!-- Submit Button -->
+						<div class="flex items-center justify-between">
+							<div class="flex items-center space-x-2 text-sm text-secondary-600">
+								<span data-show="!$contactLoading && !$contactSuccess">
+									Todos os campos com * são obrigatórios
+								</span>
+								<span data-show="$contactLoading" class="text-primary-600">
+									@components.Icon("trending-up", "w-4 h-4 animate-spin mr-1")
+									Enviando...
+								</span>
+								<span data-show="$contactSuccess" class="text-green-600">
+									@components.Icon("check", "w-4 h-4 mr-1")
+									Mensagem enviada com sucesso!
+								</span>
+							</div>
+							
+							<button 
+								type="submit" 
+								class="btn-cear"
+								data-bind-disabled="$contactLoading || !$contactForm.name || !$contactForm.email || !$contactForm.subject || !$contactForm.message">
+								<span data-show="!$contactLoading">Enviar Mensagem</span>
+								<span data-show="$contactLoading">Enviando...</span>
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<!-- Newsletter Form -->
+			<div class="mb-16">
+				<div class="text-center mb-8">
+					<h2 class="text-3xl font-bold text-secondary-900 mb-4">
+						Newsletter
+					</h2>
+					<p class="text-xl text-secondary-600">
+						Inscreva-se para receber atualizações
+					</p>
+				</div>
+
+				<div class="card-cear max-w-lg mx-auto"
+				     data-store="{newsletter: {email: '', name: ''}, newsletterLoading: false, newsletterSuccess: false, newsletterError: ''}">
+					
+					<form data-on-submit="$$post('/forms/submit-newsletter')"
+					      class="space-y-4">
+						
+						<div>
+							<label for="newsletter-name" class="block text-sm font-medium text-secondary-700 mb-2">
+								Nome
+							</label>
+							<input
+								type="text"
+								id="newsletter-name"
+								name="name"
+								placeholder="Seu nome"
+								class="input-cear"
+								data-model="newsletter.name"
+							/>
+						</div>
+
+						<div>
+							<label for="newsletter-email" class="block text-sm font-medium text-secondary-700 mb-2">
+								Email *
+							</label>
+							<input
+								type="email"
+								id="newsletter-email"
+								name="email"
+								placeholder="seu.email@exemplo.com"
+								class="input-cear"
+								data-model="newsletter.email"
+								data-on-input="debounce($$post('/forms/validate-email', {email: $newsletter.email}), 500)"
+								required
+							/>
+						</div>
+
+						<div class="flex items-center justify-between">
+							<div class="text-sm">
+								<span data-show="$newsletterSuccess" class="text-green-600">
+									@components.Icon("check", "w-4 h-4 mr-1")
+									Inscrito com sucesso!
+								</span>
+								<span data-show="$newsletterError" class="text-red-600" data-text="$newsletterError"></span>
+							</div>
+							
+							<button 
+								type="submit" 
+								class="btn-cear"
+								data-bind-disabled="$newsletterLoading || !$newsletter.email">
+								<span data-show="!$newsletterLoading">Inscrever</span>
+								<span data-show="$newsletterLoading">
+									@components.Icon("trending-up", "w-4 h-4 animate-spin mr-1")
+									Inscrevendo...
+								</span>
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<!-- Validation Examples -->
+			<div class="mb-16">
+				<div class="text-center mb-8">
+					<h2 class="text-3xl font-bold text-secondary-900 mb-4">
+						Exemplos de Validação
+					</h2>
+					<p class="text-xl text-secondary-600">
+						Máscaras e validadores brasileiros
+					</p>
+				</div>
+
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-8"
+				     data-store="{validation: {cpf: '', phone: '', cep: ''}, validationResults: {}}">
+					
+					<!-- CPF Validation -->
+					<div class="card-cear">
+						<h3 class="text-lg font-semibold text-secondary-900 mb-4">
+							Validação de CPF
+						</h3>
+						<div>
+							<label for="cpf" class="block text-sm font-medium text-secondary-700 mb-2">
+								CPF
+							</label>
+							<input
+								type="text"
+								id="cpf"
+								placeholder="000.000.000-00"
+								maxlength="14"
+								class="input-cear"
+								data-model="validation.cpf"
+								data-on-input="debounce($$post('/forms/validate-cpf', {cpf: $validation.cpf}), 300)"
+							/>
+							<div class="mt-2 text-sm">
+								<span data-show="$validationResults.cpf === 'valid'" class="text-green-600">
+									✓ CPF válido
+								</span>
+								<span data-show="$validationResults.cpf === 'invalid'" class="text-red-600">
+									✗ CPF inválido
+								</span>
+								<span data-show="!$validation.cpf" class="text-secondary-500">
+									Digite um CPF para validar
+								</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- Phone Validation -->
+					<div class="card-cear">
+						<h3 class="text-lg font-semibold text-secondary-900 mb-4">
+							Máscara de Telefone
+						</h3>
+						<div>
+							<label for="phone" class="block text-sm font-medium text-secondary-700 mb-2">
+								Telefone
+							</label>
+							<input
+								type="text"
+								id="phone"
+								placeholder="(11) 99999-9999"
+								maxlength="15"
+								class="input-cear"
+								data-model="validation.phone"
+								data-on-input="$$post('/forms/mask-phone', {phone: $validation.phone})"
+							/>
+							<div class="mt-2 text-sm text-secondary-500">
+								Formato: (11) 99999-9999
+							</div>
+						</div>
+					</div>
+
+					<!-- CEP Validation -->
+					<div class="card-cear">
+						<h3 class="text-lg font-semibold text-secondary-900 mb-4">
+							CEP com Busca
+						</h3>
+						<div>
+							<label for="cep" class="block text-sm font-medium text-secondary-700 mb-2">
+								CEP
+							</label>
+							<input
+								type="text"
+								id="cep"
+								placeholder="00000-000"
+								maxlength="9"
+								class="input-cear"
+								data-model="validation.cep"
+								data-on-input="debounce($$post('/forms/validate-cep', {cep: $validation.cep}), 500)"
+							/>
+							<div class="mt-2 text-sm">
+								<span data-show="$validationResults.cepData" class="text-green-600">
+									✓ <span data-text="$validationResults.cepData"></span>
+								</span>
+								<span data-show="$validationResults.cep === 'invalid'" class="text-red-600">
+									✗ CEP não encontrado
+								</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- Character Counter -->
+					<div class="card-cear">
+						<h3 class="text-lg font-semibold text-secondary-900 mb-4">
+							Contador de Caracteres
+						</h3>
+						<div data-store="{textArea: ''}">
+							<label for="text-counter" class="block text-sm font-medium text-secondary-700 mb-2">
+								Texto (<span data-text="$textArea.length || 0"></span>/100)
+							</label>
+							<textarea
+								id="text-counter"
+								placeholder="Digite algo..."
+								maxlength="100"
+								rows="3"
+								class="input-cear"
+								data-model="textArea"
+								data-on-input="$$post('/forms/count-chars', {text: $textArea, field: 'counter'})"
+							></textarea>
+							<div class="mt-2">
+								<div class="w-full bg-secondary-200 rounded-full h-2">
+									<div class="bg-primary-500 h-2 rounded-full transition-all duration-300" 
+									     data-style="width: (($textArea.length || 0) / 100 * 100) + '%'">
+									</div>
+								</div>
+								<div class="mt-1 text-xs text-secondary-600 flex justify-between">
+									<span>Progresso</span>
+									<span data-text="(($textArea.length || 0) / 100 * 100).toFixed(1) + '%'">0%</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</section>
+
+	<!-- Features Info -->
+	<section class="py-16 bg-secondary-50">
+		<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+			<div class="text-center mb-12">
+				<h2 class="text-3xl font-bold text-secondary-900 mb-4">
+					Tecnologias dos Forms
+				</h2>
+				<p class="text-xl text-secondary-600">
+					Como funciona a validação reativa
+				</p>
+			</div>
+
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+				<div class="card-cear">
+					<div class="flex items-start space-x-4">
+						<div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+							@components.Icon("check", "w-5 h-5 text-green-600")
+						</div>
+						<div>
+							<h3 class="text-lg font-semibold text-secondary-900 mb-2">
+								Validação Instantânea
+							</h3>
+							<p class="text-secondary-700 text-sm">
+								Feedback imediato durante a digitação com debounce inteligente 
+								para evitar validações excessivas.
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="card-cear">
+					<div class="flex items-start space-x-4">
+						<div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+							@components.Icon("trending-up", "w-5 h-5 text-blue-600")
+						</div>
+						<div>
+							<h3 class="text-lg font-semibold text-secondary-900 mb-2">
+								AJAX Submissão
+							</h3>
+							<p class="text-secondary-700 text-sm">
+								Envio assíncrono sem recarregar a página, com estados 
+								de loading e feedback visual completo.
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="card-cear">
+					<div class="flex items-start space-x-4">
+						<div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
+							@components.Icon("trending-up", "w-5 h-5 text-yellow-600")
+						</div>
+						<div>
+							<h3 class="text-lg font-semibold text-secondary-900 mb-2">
+								Máscaras Dinâmicas
+							</h3>
+							<p class="text-secondary-700 text-sm">
+								Formatação automática de CPF, telefone e CEP durante 
+								a digitação para melhor experiência do usuário.
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="card-cear">
+					<div class="flex items-start space-x-4">
+						<div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+							@components.Icon("trending-up", "w-5 h-5 text-purple-600")
+						</div>
+						<div>
+							<h3 class="text-lg font-semibold text-secondary-900 mb-2">
+								Estado Reativo
+							</h3>
+							<p class="text-secondary-700 text-sm">
+								Datastar gerencia automaticamente todos os estados 
+								do formulário, validações e feedbacks visuais.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+} 

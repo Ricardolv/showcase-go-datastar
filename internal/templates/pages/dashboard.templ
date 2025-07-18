@@ -1,0 +1,429 @@
+package pages
+
+import "showcase-datastar-go/internal/templates/layout"
+import "showcase-datastar-go/internal/templates/components"
+
+templ Dashboard() {
+	@layout.Main("Dashboard Real-time", DashboardContent())
+}
+
+templ DashboardContent() {
+	<!-- Hero Section -->
+	<section class="bg-gradient-cear relative overflow-hidden">
+		<div class="absolute inset-0 bg-black/10"></div>
+		<div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+			<div class="text-center">
+				<h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+					Dashboard Real-time
+				</h1>
+				<p class="text-xl text-orange-100 mb-8 max-w-2xl mx-auto">
+					Métricas ao vivo com Server-Sent Events. Acompanhe dados em tempo real 
+					sem polls ou refreshes manuais.
+				</p>
+				<div class="flex justify-center space-x-4">
+					@components.Badge("Live Updates", components.BadgeSuccess, components.BadgeSizeMedium)
+					@components.Badge("SSE Powered", components.BadgePrimary, components.BadgeSizeMedium)
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Dashboard Content -->
+	<section class="py-12 bg-white" 
+	         data-store="{connected: false, stats: {}, widgets: [], lastUpdate: null, error: null}"
+	         data-on-load="$$get('/dashboard/stats'); $$sse('/dashboard/live-updates')">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+			
+			<!-- Connection Status -->
+			<div class="mb-8 flex items-center justify-between">
+				<div class="flex items-center space-x-4">
+					<h2 class="text-2xl font-bold text-secondary-900">
+						Visão Geral
+					</h2>
+					<div class="flex items-center space-x-2" data-show="$connected">
+						<div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+						<span class="text-sm text-green-600 font-medium">Live</span>
+					</div>
+					<div class="flex items-center space-x-2" data-show="!$connected">
+						<div class="w-2 h-2 bg-red-500 rounded-full"></div>
+						<span class="text-sm text-red-600 font-medium">Disconnected</span>
+					</div>
+				</div>
+				
+				<div class="flex items-center space-x-4 text-sm text-secondary-600">
+					<span data-show="$lastUpdate">
+						Última atualização: <span data-text="$lastUpdate"></span>
+					</span>
+					<button 
+						class="btn-cear-outline btn-small"
+						data-on-click="$$get('/dashboard/stats')"
+						title="Forçar atualização">
+						@components.Icon("refresh", "w-4 h-4")
+					</button>
+				</div>
+			</div>
+
+			<!-- Error State -->
+			<div class="mb-6" data-show="$error">
+				<div class="bg-red-50 border border-red-200 rounded-lg p-4">
+					<div class="flex items-center">
+						<div class="flex-shrink-0">
+							@components.Icon("alert-circle", "w-5 h-5 text-red-500")
+						</div>
+						<div class="ml-3">
+							<h3 class="text-sm font-medium text-red-800">
+								Erro de Conexão
+							</h3>
+							<p class="mt-1 text-sm text-red-700" data-text="$error"></p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Stats Grid -->
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+				<!-- Users Online -->
+				<div class="card-cear">
+					<div class="flex items-center">
+						<div class="flex-shrink-0">
+							<div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
+								@components.Icon("trending-up", "w-6 h-6 text-primary-600")
+							</div>
+						</div>
+						<div class="ml-4">
+							<h3 class="text-sm font-medium text-secondary-700">
+								Usuários Online
+							</h3>
+							<p class="text-2xl font-bold text-secondary-900" 
+							   data-text="$stats.usersOnline || '-'">
+								-
+							</p>
+							<p class="text-xs text-green-600" data-show="$stats.usersChange > 0">
+								+<span data-text="$stats.usersChange"></span> nas últimas 24h
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- Page Views -->
+				<div class="card-cear">
+					<div class="flex items-center">
+						<div class="flex-shrink-0">
+							<div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+								@components.Icon("trending-up", "w-6 h-6 text-blue-600")
+							</div>
+						</div>
+						<div class="ml-4">
+							<h3 class="text-sm font-medium text-secondary-700">
+								Visualizações
+							</h3>
+							<p class="text-2xl font-bold text-secondary-900" 
+							   data-text="$stats.pageViews || '-'">
+								-
+							</p>
+							<p class="text-xs text-blue-600" data-show="$stats.viewsChange">
+								<span data-text="$stats.viewsChange"></span>% esta semana
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- Server Response -->
+				<div class="card-cear">
+					<div class="flex items-center">
+						<div class="flex-shrink-0">
+							<div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+								@components.Icon("trending-up", "w-6 h-6 text-green-600")
+							</div>
+						</div>
+						<div class="ml-4">
+							<h3 class="text-sm font-medium text-secondary-700">
+								Response Time
+							</h3>
+							<p class="text-2xl font-bold text-secondary-900" 
+							   data-text="$stats.responseTime || '-'">
+								-
+							</p>
+							<p class="text-xs text-green-600">
+								<span data-text="$stats.responseStatus || 'Checking...'"></span>
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- Memory Usage -->
+				<div class="card-cear">
+					<div class="flex items-center">
+						<div class="flex-shrink-0">
+							<div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+								@components.Icon("trending-up", "w-6 h-6 text-yellow-600")
+							</div>
+						</div>
+						<div class="ml-4">
+							<h3 class="text-sm font-medium text-secondary-700">
+								Uso de Memória
+							</h3>
+							<p class="text-2xl font-bold text-secondary-900" 
+							   data-text="$stats.memoryUsage || '-'">
+								-
+							</p>
+							<div class="w-full bg-secondary-200 rounded-full h-1.5 mt-2">
+								<div class="bg-yellow-500 h-1.5 rounded-full transition-all duration-300" 
+								     data-style="width: ($stats.memoryPercent || 0) + '%'">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Charts Row -->
+			<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+				
+				<!-- Real-time Activity Chart -->
+				<div class="card-cear">
+					<div class="flex items-center justify-between mb-6">
+						<h3 class="text-lg font-semibold text-secondary-900">
+							Atividade em Tempo Real
+						</h3>
+						<div class="flex items-center space-x-2">
+							<div class="w-2 h-2 bg-primary-500 rounded-full animate-pulse" data-show="$connected"></div>
+							<span class="text-sm text-secondary-600">Últimos 30 min</span>
+						</div>
+					</div>
+					
+					<!-- Simple Chart Representation -->
+					<div class="space-y-3">
+						<div class="flex items-center justify-between">
+							<span class="text-sm text-secondary-600">Active Search</span>
+							<div class="flex items-center space-x-2">
+								<div class="w-32 bg-secondary-200 rounded-full h-2">
+									<div class="bg-primary-500 h-2 rounded-full transition-all duration-500" 
+									     data-style="width: ($stats.searchActivity || 45) + '%'">
+									</div>
+								</div>
+								<span class="text-sm font-medium text-secondary-900" 
+								      data-text="($stats.searchActivity || 45) + '%'">45%</span>
+							</div>
+						</div>
+						
+						<div class="flex items-center justify-between">
+							<span class="text-sm text-secondary-600">Dashboard Views</span>
+							<div class="flex items-center space-x-2">
+								<div class="w-32 bg-secondary-200 rounded-full h-2">
+									<div class="bg-blue-500 h-2 rounded-full transition-all duration-500" 
+									     data-style="width: ($stats.dashboardActivity || 62) + '%'">
+									</div>
+								</div>
+								<span class="text-sm font-medium text-secondary-900" 
+								      data-text="($stats.dashboardActivity || 62) + '%'">62%</span>
+							</div>
+						</div>
+						
+						<div class="flex items-center justify-between">
+							<span class="text-sm text-secondary-600">Forms Usage</span>
+							<div class="flex items-center space-x-2">
+								<div class="w-32 bg-secondary-200 rounded-full h-2">
+									<div class="bg-green-500 h-2 rounded-full transition-all duration-500" 
+									     data-style="width: ($stats.formsActivity || 28) + '%'">
+									</div>
+								</div>
+								<span class="text-sm font-medium text-secondary-900" 
+								      data-text="($stats.formsActivity || 28) + '%'">28%</span>
+							</div>
+						</div>
+						
+						<div class="flex items-center justify-between">
+							<span class="text-sm text-secondary-600">Components Gallery</span>
+							<div class="flex items-center space-x-2">
+								<div class="w-32 bg-secondary-200 rounded-full h-2">
+									<div class="bg-yellow-500 h-2 rounded-full transition-all duration-500" 
+									     data-style="width: ($stats.componentsActivity || 73) + '%'">
+									</div>
+								</div>
+								<span class="text-sm font-medium text-secondary-900" 
+								      data-text="($stats.componentsActivity || 73) + '%'">73%</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- System Health -->
+				<div class="card-cear">
+					<div class="flex items-center justify-between mb-6">
+						<h3 class="text-lg font-semibold text-secondary-900">
+							System Health
+						</h3>
+						<div data-show="$stats.healthStatus">
+							@components.Badge("System Status", components.BadgeSuccess, components.BadgeSizeSmall)
+						</div>
+					</div>
+					
+					<div class="space-y-4">
+						<!-- CPU -->
+						<div>
+							<div class="flex items-center justify-between mb-1">
+								<span class="text-sm font-medium text-secondary-700">CPU</span>
+								<span class="text-sm text-secondary-600" data-text="($stats.cpuUsage || 35) + '%'">35%</span>
+							</div>
+							<div class="w-full bg-secondary-200 rounded-full h-2">
+								<div class="bg-blue-500 h-2 rounded-full transition-all duration-300" 
+								     data-style="width: ($stats.cpuUsage || 35) + '%'">
+								</div>
+							</div>
+						</div>
+
+						<!-- Memory -->
+						<div>
+							<div class="flex items-center justify-between mb-1">
+								<span class="text-sm font-medium text-secondary-700">Memory</span>
+								<span class="text-sm text-secondary-600" data-text="($stats.memoryPercent || 58) + '%'">58%</span>
+							</div>
+							<div class="w-full bg-secondary-200 rounded-full h-2">
+								<div class="bg-yellow-500 h-2 rounded-full transition-all duration-300" 
+								     data-style="width: ($stats.memoryPercent || 58) + '%'">
+								</div>
+							</div>
+						</div>
+
+						<!-- Disk -->
+						<div>
+							<div class="flex items-center justify-between mb-1">
+								<span class="text-sm font-medium text-secondary-700">Disk</span>
+								<span class="text-sm text-secondary-600" data-text="($stats.diskUsage || 42) + '%'">42%</span>
+							</div>
+							<div class="w-full bg-secondary-200 rounded-full h-2">
+								<div class="bg-green-500 h-2 rounded-full transition-all duration-300" 
+								     data-style="width: ($stats.diskUsage || 42) + '%'">
+								</div>
+							</div>
+						</div>
+
+						<!-- Network -->
+						<div>
+							<div class="flex items-center justify-between mb-1">
+								<span class="text-sm font-medium text-secondary-700">Network I/O</span>
+								<span class="text-sm text-secondary-600" data-text="($stats.networkIO || 18) + ' MB/s'">18 MB/s</span>
+							</div>
+							<div class="w-full bg-secondary-200 rounded-full h-2">
+								<div class="bg-purple-500 h-2 rounded-full transition-all duration-300" 
+								     data-style="width: ($stats.networkIOPercent || 18) + '%'">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Recent Activity -->
+			<div class="card-cear">
+				<div class="flex items-center justify-between mb-6">
+					<h3 class="text-lg font-semibold text-secondary-900">
+						Atividade Recente
+					</h3>
+					<span class="text-sm text-secondary-600">
+						Atualizado em tempo real
+					</span>
+				</div>
+				
+				<div id="recent-activity" class="space-y-3">
+					<!-- Activity items will be populated via SSE -->
+					<div class="flex items-center space-x-3 p-3 bg-secondary-50 rounded-lg">
+						<div class="w-2 h-2 bg-secondary-400 rounded-full"></div>
+						<span class="text-sm text-secondary-600">
+							Aguardando conexão com server...
+						</span>
+						<span class="text-xs text-secondary-500 ml-auto">
+							Conectando...
+						</span>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</section>
+
+	<!-- Features Info -->
+	<section class="py-16 bg-secondary-50">
+		<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+			<div class="text-center mb-12">
+				<h2 class="text-3xl font-bold text-secondary-900 mb-4">
+					Tecnologias do Dashboard
+				</h2>
+				<p class="text-xl text-secondary-600">
+					Como funciona a atualização em tempo real
+				</p>
+			</div>
+
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+				<div class="card-cear">
+					<div class="flex items-start space-x-4">
+						<div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+							@components.Icon("trending-up", "w-5 h-5 text-green-600")
+						</div>
+						<div>
+							<h3 class="text-lg font-semibold text-secondary-900 mb-2">
+								Server-Sent Events
+							</h3>
+							<p class="text-secondary-700 text-sm">
+								Conexão persistente com o servidor para atualizações automáticas 
+								de métricas sem necessidade de polling manual.
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="card-cear">
+					<div class="flex items-start space-x-4">
+						<div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+							@components.Icon("trending-up", "w-5 h-5 text-blue-600")
+						</div>
+						<div>
+							<h3 class="text-lg font-semibold text-secondary-900 mb-2">
+								Go Routines
+							</h3>
+							<p class="text-secondary-700 text-sm">
+								Processamento assíncrono em Go para coleta e envio de métricas 
+								em tempo real sem bloquear a interface.
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="card-cear">
+					<div class="flex items-start space-x-4">
+						<div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
+							@components.Icon("trending-up", "w-5 h-5 text-yellow-600")
+						</div>
+						<div>
+							<h3 class="text-lg font-semibold text-secondary-900 mb-2">
+								Estado Reativo
+							</h3>
+							<p class="text-secondary-700 text-sm">
+								Datastar gerencia automaticamente o estado da UI, atualizando 
+								todos os componentes quando novos dados chegam via SSE.
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="card-cear">
+					<div class="flex items-start space-x-4">
+						<div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+							@components.Icon("trending-up", "w-5 h-5 text-purple-600")
+						</div>
+						<div>
+							<h3 class="text-lg font-semibold text-secondary-900 mb-2">
+								Animações Suaves
+							</h3>
+							<p class="text-secondary-700 text-sm">
+								Transições CSS e animações Tailwind para mudanças visuais 
+								elegantes quando os dados são atualizados.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+} 

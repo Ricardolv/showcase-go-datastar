@@ -1,0 +1,172 @@
+package fragments
+
+import (
+	"fmt"
+	"showcase-datastar-go/internal/templates/components"
+)
+
+type SearchResult struct {
+	ID          string
+	Title       string
+	Description string
+	Category    string
+	Tags        []string
+	Score       float64
+	URL         string
+	Icon        string
+	Popularity  int
+	LastUpdate  string
+}
+
+templ SearchResults(results []SearchResult, query string, totalResults int) {
+	<div data-on-load="$loading = false; $results = results">
+		if len(results) == 0 {
+			<!-- No Results -->
+			<div class="text-center py-8">
+				<div class="w-12 h-12 bg-secondary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+					@components.Icon("search", "w-6 h-6 text-secondary-400")
+				</div>
+				<h3 class="text-lg font-medium text-secondary-900 mb-2">
+					Nenhum resultado encontrado
+				</h3>
+				<p class="text-secondary-600">
+					Tente usar termos diferentes ou verifique a ortografia.
+				</p>
+			</div>
+		} else {
+			<!-- Results List -->
+			<div class="space-y-4">
+				for _, result := range results {
+					<div class="card-cear group hover:border-primary-200 transition-colors cursor-pointer">
+						<div class="flex items-start space-x-4">
+							
+							<!-- Icon -->
+							<div class="w-12 h-12 bg-secondary-100 rounded-lg flex items-center justify-center group-hover:bg-primary-100 transition-colors">
+								@components.Icon(result.Icon, "w-6 h-6 text-secondary-600 group-hover:text-primary-600")
+							</div>
+							
+							<!-- Content -->
+							<div class="flex-1 min-w-0">
+								<!-- Title with highlighting -->
+								<h3 class="text-lg font-semibold text-secondary-900 group-hover:text-primary-600 transition-colors mb-1">
+									@HighlightText(result.Title, query)
+								</h3>
+								
+								<!-- Description with highlighting -->
+								<p class="text-secondary-700 text-sm mb-3 line-clamp-2">
+									@HighlightText(result.Description, query)
+								</p>
+								
+								<!-- Meta Info -->
+								<div class="flex items-center justify-between">
+									<div class="flex items-center space-x-3">
+										<!-- Category Badge -->
+										if result.Category == "languages" {
+											@components.Badge("Linguagem", components.BadgePrimary, components.BadgeSizeSmall)
+										} else if result.Category == "frameworks" {
+											@components.Badge("Framework", components.BadgeSuccess, components.BadgeSizeSmall)
+										} else if result.Category == "tools" {
+											@components.Badge("Ferramenta", components.BadgeInfo, components.BadgeSizeSmall)
+										} else if result.Category == "databases" {
+											@components.Badge("Database", components.BadgeWarning, components.BadgeSizeSmall)
+										} else {
+											@components.Badge("Geral", components.BadgeSecondary, components.BadgeSizeSmall)
+										}
+										
+										<!-- Popularity -->
+										<div class="flex items-center text-xs text-secondary-500">
+											@components.Icon("trending-up", "w-3 h-3 mr-1")
+											<span>{ formatPopularity(result.Popularity) }</span>
+										</div>
+										
+										<!-- Last Update -->
+										<div class="flex items-center text-xs text-secondary-500">
+											@components.Icon("trending-up", "w-3 h-3 mr-1")
+											<span>{ result.LastUpdate }</span>
+										</div>
+									</div>
+									
+									<!-- Score -->
+									<div class="text-xs text-secondary-400">
+										<span>{ formatScore(result.Score) }% match</span>
+									</div>
+								</div>
+								
+								<!-- Tags -->
+								if len(result.Tags) > 0 {
+									<div class="mt-3 flex flex-wrap gap-1">
+										for _, tag := range result.Tags[:min(len(result.Tags), 4)] {
+											<span class="px-2 py-0.5 bg-secondary-100 text-secondary-600 text-xs rounded">
+												@HighlightText(tag, query)
+											</span>
+										}
+										if len(result.Tags) > 4 {
+											<span class="px-2 py-0.5 bg-secondary-100 text-secondary-600 text-xs rounded">
+												+{ fmt.Sprintf("%d", len(result.Tags)-4) }
+											</span>
+										}
+									</div>
+								}
+							</div>
+							
+							<!-- External Link Icon -->
+							<div class="flex-shrink-0">
+								<a href={ templ.URL(result.URL) } target="_blank" class="block">
+									@components.Icon("external-link", "w-4 h-4 text-secondary-400 group-hover:text-primary-500")
+								</a>
+							</div>
+						</div>
+					</div>
+				}
+			</div>
+			
+			<!-- Load More Button (if needed) -->
+			if totalResults > len(results) {
+				<div class="text-center mt-8">
+					<button class="btn-cear-outline" data-on-click="$$get('/search/results?q=' + $query + '&offset=' + $results.length)">
+						Carregar mais resultados
+					</button>
+					<p class="text-sm text-secondary-600 mt-2">
+						Mostrando { fmt.Sprintf("%d", len(results)) } de { fmt.Sprintf("%d", totalResults) } resultados
+					</p>
+				</div>
+			}
+		}
+	</div>
+}
+
+// HighlightText highlights search terms in text
+templ HighlightText(text string, query string) {
+	if query == "" {
+		{ text }
+	} else {
+		{ highlightSearchTerms(text, query) }
+	}
+}
+
+// Helper functions would be implemented in Go
+func highlightSearchTerms(text string, query string) string {
+	// This would be implemented to highlight matching terms
+	// For now, returning plain text
+	return text
+}
+
+func formatPopularity(popularity int) string {
+	if popularity >= 1000000 {
+		return fmt.Sprintf("%.1fM", float64(popularity)/1000000)
+	} else if popularity >= 1000 {
+		return fmt.Sprintf("%.1fK", float64(popularity)/1000)
+	}
+	return fmt.Sprintf("%d", popularity)
+}
+
+func formatScore(score float64) string {
+	return fmt.Sprintf("%.0f", score*100)
+}
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+} 

@@ -1,0 +1,60 @@
+package layout
+
+import "showcase-datastar-go/internal/templates/components"
+
+templ Main(title string, content templ.Component) {
+	<!DOCTYPE html>
+	<html lang="pt-BR">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<title>{ title } - CEAR Showcase Go</title>
+		
+		<!-- Tailwind CSS -->
+		<link href="/static/css/styles.css" rel="stylesheet"/>
+		
+		<!-- Inter Font -->
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+		
+		<!-- Favicon -->
+		<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>"/>
+		
+		<!-- Meta tags -->
+		<meta name="description" content="CEAR Showcase Go - Demonstração das capacidades do Go + Datastar + Tailwind CSS v4"/>
+		<meta name="keywords" content="Go, Golang, Datastar, Tailwind CSS, HTMX, Templ, Performance"/>
+		<meta name="author" content="Equipe CEAR"/>
+		
+		<!-- Open Graph -->
+		<meta property="og:title" content={ title + " - CEAR Showcase Go" }/>
+		<meta property="og:description" content="Demonstração tecnológica: Go + Datastar + Tailwind CSS"/>
+		<meta property="og:type" content="website"/>
+		
+		<!-- Datastar -->
+		<script src="/static/js/datastar.js"></script>
+	</head>
+	<body class="bg-secondary-50 text-secondary-900 antialiased min-h-screen flex flex-col">
+		
+		<!-- Navigation -->
+		@components.Navbar()
+		
+		<!-- Main Content -->
+		<main class="flex-1">
+			@content
+		</main>
+		
+		<!-- Footer -->
+		@components.Footer()
+		
+		<!-- Loading indicator global -->
+		<div id="loading-indicator" 
+		     class="fixed top-4 right-4 bg-primary-500 text-white px-4 py-2 rounded-lg shadow-orange-lg opacity-0 transition-opacity duration-200 pointer-events-none z-50"
+		     data-show="loading">
+			<div class="flex items-center space-x-2">
+				<div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+				<span class="text-sm font-medium">Carregando...</span>
+			</div>
+		</div>
+		
+	</body>
+	</html>
+} 
